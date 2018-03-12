@@ -1,0 +1,21 @@
+{% extends "groups/group_base.html" %}
+
+{% block pregroup %}
+
+{% endblock %}
+
+
+
+{% block group_content %}
+<ul>
+  {% for group in object_list %}
+    <li>{{group.name}} - ({{group.members.count}})</li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+{% block postgroup %}
+
+{% endblock %}

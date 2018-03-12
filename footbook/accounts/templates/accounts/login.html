@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+
+{% block content %}
+  <div class="container">
+    <h1>Login</h1>
+    <form method="post">
+      {% csrf_token %}
+      {# this is how you inject the usercreationform with bootrap #}
+      {% bootstrap_form form%}
+      <input type="submit" class="btn btn-default" value="login">
+    </form>
+
+  </div>
+{% endblock %}
