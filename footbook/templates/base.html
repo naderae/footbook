@@ -31,8 +31,8 @@
     						{% if user.is_authenticated %}
 
                       <li><a href="{% url 'groups:all' %}" class="btn btn-simple">All Groups</a></li>
-                      <li><a href="#" class="btn btn-simple">Create Group</a></li>
-                      <li><a href="#" class="btn btn-simple">My Groups</a></li>
+                      <li><a href="{% url 'groups:create' %}" class="btn btn-simple">Create Group</a></li>
+                      <li><a href="{% url 'groups:for_user' username=user.username %}" class="btn btn-simple">My Groups</a></li>
                       <li><a href="{% url 'accounts:logout' %}" class="btn btn-simple">Log out</a></li>
     						{% else %}
     						      <li><a href="#"class="btn btn-simple">Groups</a></li>

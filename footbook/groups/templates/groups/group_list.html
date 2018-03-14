@@ -1,0 +1,28 @@
+{% extends "groups/group_base.html" %}
+
+{% block pregroup %}
+  {% if user.is_authenticated %}
+    <h3>Welcome {{ user.username }}! Select a Group with Shared interests and start chatting!</h3>
+  {% endif %}
+
+{% endblock %}
+
+
+
+{% block group_content %}
+  {% for group in object_list  %}
+
+    <a href="#">{{group.name}}</a>
+    {{group.description}}
+    {{group.members.count }}
+    {{group.posts.count}}
+
+  {% endfor %}
+{% endblock %}
+
+
+
+
+{% block postgroup %}
+
+{% endblock %}

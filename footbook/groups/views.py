@@ -29,7 +29,7 @@ class UsersGroups(LoginRequiredMixin, generic.ListView):
     template_name = 'groups/user_group_list.html'
 
     def get_queryset(self):
-        return Group.objects.filter(user=self.request.user).order_by('name')
+        return Group.objects.all().filter(user=self.request.user).order_by('name')
 
 
 
@@ -49,7 +49,8 @@ class JoinGroup(LoginRequiredMixin, generic.RedirectView):
 
         # condition that raises the error
         try:
-            # self.request.user is how you grab the user that is logged in
+            # self.request.user is how you grab the user that made the request
+            # this is how the user joins the group
             GroupMember.objects.create(user=self.request.user, group=group)
         except:
             messages.warning(self.request, "You are already a Member of the {} group!" ).format(group.name)

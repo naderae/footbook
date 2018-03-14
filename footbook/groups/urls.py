@@ -8,7 +8,10 @@ app_name = 'groups'
 urlpatterns = [
 
     url(r"^$",views.ListGroups.as_view(),name="all"),
-    url(r"^(?P<slug>[-\w]+)/single/(?P<pk>\d+)/$",views.SingleGroup.as_view(),name="single"),
-
+    url(r"^(?P<slug>[-\w]+)/single/$",views.SingleGroup.as_view(),name="single"),
+    url(r"^new/$", views.CreateGroup.as_view(), name="create"),
+    url(r"^(?P<username>[-\w]+)/$",views.UsersGroups.as_view(),name="for_user"),
+    url(r"join/(?P<slug>[-\w]+)/$",views.JoinGroup.as_view(),name="join"),
+    url(r"leave/(?P<slug>[-\w]+)/$",views.LeaveGroup.as_view(),name="leave"),
 
 ]
