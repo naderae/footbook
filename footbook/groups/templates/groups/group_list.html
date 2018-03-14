@@ -12,10 +12,23 @@
 {% block group_content %}
   {% for group in object_list  %}
 
-    <a href="#">{{group.name}}</a>
-    {{group.description}}
-    {{group.members.count }}
-    {{group.posts.count}}
+
+  <a class="list-group-item" href="{% url 'groups:single' slug=group.slug %}">
+        <h3 class="title list-group-item-heading">{{ group.name }}</h3>
+        <div class="list-group-item-text ">
+				<!-- we use safe so that u see the representation of the tags, not the html tags themselves -->
+				{{ group.description}}
+				<div class="row">
+					<div class="col-md-4">
+						<span class="badge">{{ group.members.count }}</span> member{{ group.members.count|pluralize }}
+					</div>
+					<div class="col-md-4">
+						<span class="badge">{{ group.posts.count }}</span> post{{ group.posts.count|pluralize }}
+					</div>
+				</div>
+			</div>
+  </a>
+
 
   {% endfor %}
 {% endblock %}

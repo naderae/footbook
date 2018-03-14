@@ -26,6 +26,8 @@ class PostList(SelectRelatedMixin, ListView):
     model = models.Post
     select_related = ('user', 'group')
 
+    template_name = 'groups/group_detail.html'
+
 class PostDetail(SelectRelatedMixin, generic.DeleteView):
     model = models.Post
     select_related = ('user', 'group')
@@ -41,8 +43,10 @@ class PostDetail(SelectRelatedMixin, generic.DeleteView):
         )
 class CreatePost(LoginRequiredMixin, generic.CreateView, SelectRelatedMixin):
     # here, we track the group that the post is for by adding it as a field
-    fields = ('title','content','group')
+    fields = ('title','content')
     model = models.Post
+
+    # template_name = 'posts/post_form.html'
 
     # just to check if the form is valid
     #  this also connects the post to the user that made the request
@@ -50,7 +54,9 @@ class CreatePost(LoginRequiredMixin, generic.CreateView, SelectRelatedMixin):
         self.object = form.save(commit=False)
         # connect the post to the user
         self.user = self.request.user
-        #
+        # connect the post to the group
+        # self.group = 
+
         self.object.save()
         return super().form_valid(form)
 

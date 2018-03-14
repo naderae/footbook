@@ -8,7 +8,7 @@
 
 {% block group_content %}
 <ul>
-  {% for group in object_list %}
+  {% for group in groups_list %}
     <li>{{group.name}} - ({{group.members.count}})</li>
   {% endfor %}
 </ul>

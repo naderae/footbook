@@ -1,22 +1,45 @@
 {% extends "groups/group_base.html" %}
 
 {% block pregroup %}
+  <div class="">
+
+  </div>
   <h2>{{group.name}}</h2>
 
   {% if user in group.members.all %}
-		<a href="{% url 'groups:leave' slug=group.slug %}" class="btn btn-lg btn-fill btn-warning"><span class="glyphicon glyphicon-remove-circle"></span> Leave</a>
+		<a href="{% url 'groups:leave' slug=group.slug %}" class="btn btn-lg "><span class="glyphicon glyphicon-remove-circle"></span> Leave</a>
 	{% else %}
-		<a href="{% url 'groups:join' slug=group.slug %}" class="btn btn-lg btn-fill btn-warning"><span class="glyphicon glyphicon-ok-circle"></span> Join</a>
+		<a href="{% url 'groups:join' slug=group.slug %}" class="btn btn-lg "><span class="glyphicon glyphicon-ok-circle"></span> Join</a>
 	{% endif %}
-  
+
+
+  <strong>Description:</strong> {{group.description}} ||
+  <strong>Group Size:</strong> {{group.members.count}}
+  <button type="button" name="button">
+    <a href="{% url 'posts:create' slug=group.slug%}">Leave a Post</a>
+  </button>
+
+
+
 {% endblock %}
 
 
 {% block group_content %}
 
-  {{group.name}}
-  {{group.description}}
-  {{group.members.count}}
+<div class="col-md-8">
+	{% if group.posts.count == 0 %}
+	<h2>No posts in this group yet!</h2>
+
+	{% else %}
+  <h1>{{group.name}}'s posts':</h1>
+		{% for post in group.posts.all %}
+    <!-- include is a way to inject an html file right into the template -->
+			by: {{post.user}}<br>
+      {{post.content}}
+		{% endfor %}
+
+	{% endif %}
+</div>
 
 {% endblock %}
 

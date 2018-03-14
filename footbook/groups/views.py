@@ -24,12 +24,14 @@ class SingleGroup(generic.DetailView):
 class ListGroups(generic.ListView):
     model = Group
 
+
 class UsersGroups(LoginRequiredMixin, generic.ListView):
     model = models.Group
     template_name = 'groups/user_group_list.html'
 
     def get_queryset(self):
-        return Group.objects.all().filter(user=self.request.user).order_by('name')
+
+        return Group.objects.filter(members__username=self.request.user.username).order_by('name')
 
 
 
@@ -52,10 +54,10 @@ class JoinGroup(LoginRequiredMixin, generic.RedirectView):
             # self.request.user is how you grab the user that made the request
             # this is how the user joins the group
             GroupMember.objects.create(user=self.request.user, group=group)
-        except:
-            messages.warning(self.request, "You are already a Member of the {} group!" ).format(group.name)
+        except IntegrityError:
+            messages.warning(self.request, ("You are already a Member of the {} group!".format(group.name)))
         else:
-            messages.success(self.request, "Welcome! You are now a Member of the {} group".format(group.name))
+            messages.success(self.request, ("Welcome! You are now a Member of the {} group".format(group.name)))
         return super().get(request,*args,**kwargs)
 
 class LeaveGroup(LoginRequiredMixin, generic.RedirectView):

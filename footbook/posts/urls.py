@@ -7,8 +7,10 @@ app_name = 'posts'
 
 urlpatterns = [
 
-    url(r"^(?P<slug>[-\w]+)/posts/$",views.PostList.as_view(),name="all"),
-    url(r"^(?P<slug>[-\w]+)/posts/(?P<pk>\d+)/$",views.PostDetail.as_view(),name="single"),
+    url(r"^(?P<slug>[-\w]+)/$",views.PostList.as_view(),name="all"),
+    url(r"^(?P<pk>\d+)/(?P<slug>[-\w]+)/$",views.PostDetail.as_view(),name="single"),
+    url(r"^(?P<slug>[-\w]+)/new/$", views.CreatePost.as_view(), name="create"),
+
 
 
 
