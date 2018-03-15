@@ -41,6 +41,29 @@ class PostDetail(SelectRelatedMixin, generic.DeleteView):
         # the second __ refers to the querying, and it what follows is the search type(iexact).
             group__slug__iexact=self.kwargs.get("slug")
         )
+
+class UserPosts(generic.ListView):
+    model = models.Post
+    template_name = 'posts/user_post_list.hmtl'
+
+    def get_queryset(self):
+        # here we check if the post's user actually exists
+        try:
+            self.post_user= User.objects.get(username__iexact=self.kwargs.get('username'))
+        except User.DoesNotExist:
+            raise Http404
+        else:
+            return self.post_user.posts.all()
+
+        # here we are grabbing the user's posts
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_user'] = self.post_user
+        return context
+
+
+
+
 class CreatePost(LoginRequiredMixin, generic.CreateView, SelectRelatedMixin):
     # here, we track the group that the post is for by adding it as a field
     fields = ('title','content')
@@ -55,7 +78,7 @@ class CreatePost(LoginRequiredMixin, generic.CreateView, SelectRelatedMixin):
         # connect the post to the user
         self.user = self.request.user
         # connect the post to the group
-        # self.group = 
+        # self.group =
 
         self.object.save()
         return super().form_valid(form)

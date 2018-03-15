@@ -29,7 +29,7 @@
                 <!--  so you can check if the user is logged in by the user.is_authenticated-->
                 <!-- if user is logged in, same as if current_user -->
     						{% if user.is_authenticated %}
-
+                      
                       <li><a href="{% url 'groups:all' %}" class="btn btn-simple">All Groups</a></li>
                       <li><a href="{% url 'groups:create' %}" class="btn btn-simple">Create Group</a></li>
                       <li><a href="{% url 'groups:for_user' username=user.username %}" class="btn btn-simple">My Groups</a></li>

@@ -16,7 +16,7 @@
   <strong>Description:</strong> {{group.description}} ||
   <strong>Group Size:</strong> {{group.members.count}}
   <button type="button" name="button">
-    <a href="{% url 'posts:create' slug=group.slug%}">Leave a Post</a>
+    <a href="{% url 'posts:create' slug=group.slug %}">Leave a Post</a>
   </button>
 
 
@@ -33,8 +33,8 @@
 	{% else %}
   <h1>{{group.name}}'s posts':</h1>
 		{% for post in group.posts.all %}
-    <!-- include is a way to inject an html file right into the template -->
-			by: {{post.user}}<br>
+
+			by: <a href="{% url 'posts:for_user' username=user.username %}">{{post.user}}</a><br>
       {{post.content}}
 		{% endfor %}
 
